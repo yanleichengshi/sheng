@@ -16,8 +16,6 @@
     <name>sheng</name>
     <description>Demo project for Spring Boot</description>
 
-
-
     <dependencyManagement>
         <dependencies>
             <!-- 整合Spring Boot-->
