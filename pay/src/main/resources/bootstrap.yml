@@ -1,6 +1,6 @@
 spring:
   application:
-    name: orders
+    name: pay
   profiles:
     active: dev
   cloud:

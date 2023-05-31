@@ -1,20 +1,20 @@
-package com.tan.orders.web;
+package com.tan.pay.web;
 
 import com.alibaba.fastjson.JSONObject;
-import com.tan.orders.service.PersonService;
+import com.tan.pay.apifeign.PersonApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/ss")
 public class PersonController {
     @Autowired
-    private PersonService personService;
+    private PersonApiService personApiService;
 
-    @GetMapping("/getPersonInfo")
-    public JSONObject getPersonInfo() {
-        return personService.getPersonInfo();
+    @GetMapping("/getInfos")
+    public JSONObject getInfos() {
+        return personApiService.getInfos();
     }
 }
