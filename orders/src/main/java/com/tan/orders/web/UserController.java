@@ -1,20 +1,22 @@
 package com.tan.orders.web;
 
-import com.alibaba.fastjson.JSONObject;
-import com.tan.orders.service.PersonService;
+import com.tan.orders.entity.UserEntity;
+import com.tan.orders.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/person")
-public class PersonController {
-    @Autowired
-    private PersonService personService;
+import java.util.List;
 
-    @GetMapping("/getPersonInfo")
-    public JSONObject getPersonInfo() {
-        return personService.getPersonInfo();
+@RestController
+@RequestMapping("/user")
+public class UserController {
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/getUsers")
+    public List<UserEntity> getUsers() {
+        return userService.getUsers();
     }
 }
