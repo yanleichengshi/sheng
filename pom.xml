@@ -15,8 +15,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>orders</module>
-        <module>pay</module>
+        <module>oms</module>
+        <module>ums</module>
     </modules>
 
     <dependencies>

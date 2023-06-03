@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: oms
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        group: demo-group
+        server-addr: localhost:8848
+        namespace: my_naocs
+      config:
+        server-addr: localhost:8848
+        group: demo-group
+        namespace: my_naocs
+        file-extension: yaml
+        refresh-enabled: true
+  shardingsphere:
+    mode:
+      type: Memory #内存模式，无需持久化
+    rules:
+      sharding:
+        tables:
+          #自定义逻辑表名
+          t_orders:
+            tableStrategy:
+              standard:
+                shardingColumn: id
+                shardingAlgorithmName: table-inline
+        shardingAlgorithms:
+          ##分表规则(使用的是标准分片算法，根据列进行运算分片)
+          table-inline:
+            type: INLINE
+            props:
+              algorithm-expression: t_orders_$->{t_orders_id%2}
+      #配置数据源（注意type这是5.1版本的属性名，5.1之前不是用这个的，使用的是dataSourceClassName）官方文档也是使用这个
+    datasource:
+      names: user-0,user-1
+      user-0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        jdbcUrl: jdbc:mysql://localhost:3308/user_0?useUnicode=true
+        username: root
+        password: 123456
+      user-1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        jdbcUrl: jdbc:mysql://localhost:3308/user_1?useUnicode=true
+        username: root
+        password: 123456
+    props:
+      sql-show: true # 开启sql日志打印
