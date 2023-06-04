@@ -7,6 +7,7 @@ public enum ErrorEnum {
     ADD_FAIL(50001, "新增失败"),
     DEL_FAIL(50002, "删除失败"),
     EDIT_FAIL(50003, "修改失败"),
+    LOGIN_FAIL(50004, "登录失败"),
     ILLEGAL_PARAM(60001, "参数异常"),
     ;
 

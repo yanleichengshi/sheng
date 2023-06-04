@@ -47,8 +47,8 @@ public class R<T> {
     /**
      * 失败，自定义消息
      */
-    public static R<Void> fail(String msg) {
-        R<Void> result = new R<>();
+    public static R<String> fail(String msg) {
+        R<String> result = new R<>();
         result.setCode(ResultCode.FAILED.getCode());
         result.setMsg(msg);
         return result;
@@ -57,8 +57,8 @@ public class R<T> {
     /**
      * 失败，使用已定义枚举
      */
-    public static R<Void> fail(ResultCode resultCode) {
-        R<Void> result = new R<>();
+    public static R<String> fail(ResultCode resultCode) {
+        R<String> result = new R<>();
         result.setCode(resultCode.getCode());
         result.setMsg(resultCode.getMsg());
         return result;

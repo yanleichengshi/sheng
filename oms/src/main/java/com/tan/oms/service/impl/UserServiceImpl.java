@@ -4,7 +4,7 @@ import com.tan.common.cons.Cons;
 import com.tan.oms.dao.UserDao;
 import com.tan.oms.entity.UserEntity;
 import com.tan.oms.service.UserService;
-import com.tan.oms.utils.AESUtils;
+import com.tan.common.utils.AESUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
