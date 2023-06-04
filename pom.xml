@@ -13,8 +13,11 @@
     <artifactId>sheng</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <name>sheng</name>
+    <description>parent module for project</description>
 
     <modules>
+        <module>common</module>
         <module>oms</module>
         <module>ums</module>
     </modules>
@@ -52,11 +55,13 @@
             <version>3.1.1</version>
         </dependency>
 
+        <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.24</version>
         </dependency>
+        <!-- ali - json -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -78,10 +83,7 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+
         </plugins>
     </build>
 

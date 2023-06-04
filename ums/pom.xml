@@ -11,9 +11,17 @@
     <groupId>com.tan</groupId>
     <artifactId>ums</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <name>ums</name>
+    <description>user module for project</description>
 
     <dependencies>
-        <!-- feign -->
+        <dependency>
+            <groupId>com.tan</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!-- feign-loadbalancer -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-loadbalancer</artifactId>

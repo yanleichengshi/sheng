@@ -1,4 +1,4 @@
-package com.tan.oms.config;
+package com.tan.common.resp;
 
 /**
  * 普通常量
