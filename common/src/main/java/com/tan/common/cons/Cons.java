@@ -1,4 +1,4 @@
-package com.tan.common.resp;
+package com.tan.common.cons;
 
 /**
  * 普通常量

@@ -1,6 +1,6 @@
 package com.tan.oms.service.impl;
 
-import com.tan.common.resp.Cons;
+import com.tan.common.cons.Cons;
 import com.tan.oms.dao.UserDao;
 import com.tan.oms.entity.UserEntity;
 import com.tan.oms.service.UserService;
