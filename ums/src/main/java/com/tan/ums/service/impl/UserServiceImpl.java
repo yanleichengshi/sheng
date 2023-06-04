@@ -29,8 +29,6 @@ public class UserServiceImpl implements UserService {
         String encrypt = AESUtils.encrypt(req.getPwd(), Cons.PWD_SALT);
         req.setPwd(encrypt);
 
-        // 通过role拿到roleId
-        req.setRoleId(1);
         req.setDelFlag("1");
         return userDao.add(req);
     }

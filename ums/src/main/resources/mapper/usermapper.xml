@@ -10,7 +10,6 @@
         <result column="phone" jdbcType="VARCHAR" property="phone"/>
         <result column="sex" jdbcType="VARCHAR" property="sex"/>
         <result column="address" jdbcType="VARCHAR" property="address"/>
-        <result column="role_id" jdbcType="INTEGER" property="roleId"/>
         <result column="del_flag" jdbcType="INTEGER" property="delFlag"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
@@ -21,9 +20,9 @@
     </select>
 
     <insert id="add" useGeneratedKeys="true">
-        insert into t_user (nick_name, pwd, phone, sex, address, role_id, del_flag, create_time, update_time) values
+        insert into t_user (nick_name, pwd, phone, sex, address, del_flag, create_time, update_time) values
         (
-          #{req.nickName}, #{req.pwd}, #{req.phone}, #{req.sex}, #{req.address}, #{req.roleId}, #{req.delFlag}, now(), now()
+          #{req.nickName}, #{req.pwd}, #{req.phone}, #{req.sex}, #{req.address}, #{req.delFlag}, now(), now()
         )
     </insert>
 </mapper>

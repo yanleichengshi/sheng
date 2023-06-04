@@ -17,9 +17,4 @@ public class UserEntity extends BaseEntity {
     private String sex;
     /**住址*/
     private String address;
-    /**角色*/
-    private Integer roleId;
-
-    /**----------  关联请求参数  ----------*/
-    private String role;
 }
