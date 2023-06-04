@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.equals(userEntity.getPwd(), encrypt)) {
             // 身份认证成功，生成token，写入redis，并且返回token
             String token = UUID.randomUUID().toString();
-            redisUtils.setEx(RedisCons.UMS_USER_TOKEN, token, 30, TimeUnit.MINUTES);
+            redisUtils.setEx(RedisCons.UMS_USER + "TOKEN", token, 30, TimeUnit.MINUTES);
             return token;
         }
         return StringUtils.EMPTY;

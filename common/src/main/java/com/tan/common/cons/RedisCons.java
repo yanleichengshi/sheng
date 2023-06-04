@@ -6,6 +6,6 @@ package com.tan.common.cons;
 public interface RedisCons {
     /** ----------  UMS  ---------- */
     /**用户token*/
-    String UMS_USER_TOKEN = "UMS_USER_TOKEN:";
+    String UMS_USER = "UMS_USER_";
 
 }
