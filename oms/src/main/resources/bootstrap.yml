@@ -15,38 +15,34 @@ spring:
         namespace: my_naocs
         file-extension: yaml
         refresh-enabled: true
+  main:
+    allow-bean-definition-overriding: true
   shardingsphere:
-    mode:
-      type: Memory #内存模式，无需持久化
-    rules:
-      sharding:
-        tables:
-          #自定义逻辑表名
-          t_orders:
-            tableStrategy:
-              standard:
-                shardingColumn: id
-                shardingAlgorithmName: table-inline
-        shardingAlgorithms:
-          ##分表规则(使用的是标准分片算法，根据列进行运算分片)
-          table-inline:
-            type: INLINE
-            props:
-              algorithm-expression: t_orders_$->{t_orders_id%2}
-      #配置数据源（注意type这是5.1版本的属性名，5.1之前不是用这个的，使用的是dataSourceClassName）官方文档也是使用这个
     datasource:
-      names: user-0,user-1
-      user-0:
-        type: com.zaxxer.hikari.HikariDataSource
-        driverClassName: com.mysql.cj.jdbc.Driver
-        jdbcUrl: jdbc:mysql://localhost:3308/user_0?useUnicode=true
-        username: root
-        password: 123456
-      user-1:
-        type: com.zaxxer.hikari.HikariDataSource
-        driverClassName: com.mysql.cj.jdbc.Driver
-        jdbcUrl: jdbc:mysql://localhost:3308/user_1?useUnicode=true
-        username: root
-        password: 123456
-    props:
-      sql-show: true # 开启sql日志打印
+      names: ds0,ds1 # 兹定于虚拟库名
+      ds0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ds_0?characterEncoding=utf-8&serverTimezone=UTC
+        username: root #你的账号
+        password: qwer123 #你的密码
+      ds1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ds_1?characterEncoding=utf-8&serverTimezone=UTC
+        username: root #你的账号
+        password: qwer123 #你的密码
+    sharding:
+      tables:
+        t_order: #自定义虚拟表名 但是在mapper.xml中 操作表的时候 要用这个虚拟表名
+          actual-data-nodes: ds$->{0..1}.order$->{0..1}
+          databaseStrategy: #分库策略
+            inline:
+              shardingColumn: sharding_db_id #分库用的列名(真实列名）
+              algorithmExpression: ds${sharding_db_id % 2} #分库算法，根据上面的列里面的数据计算分到哪个库
+          table-strategy: #分表策略
+            inline:
+              sharding-column: sharding_table_id #分表用的列名(真实列名）
+              algorithm-expression: order$->{sharding_table_id % 2} #分表算法，根据上面的列里面的数据计算分到哪个表
+props:
+  sql.show: true
