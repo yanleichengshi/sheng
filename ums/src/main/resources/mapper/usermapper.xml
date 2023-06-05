@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tan.ums.dao.UserDao">
-    <resultMap id="userInfos" type="com.tan.ums.entity.UserEntity">
+    <resultMap id="userInfos" type="com.tan.ums.entity.UserDomain">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="nick_name" jdbcType="VARCHAR" property="nickName"/>
         <result column="pwd" jdbcType="VARCHAR" property="pwd"/>
@@ -11,18 +11,25 @@
         <result column="sex" jdbcType="VARCHAR" property="sex"/>
         <result column="address" jdbcType="VARCHAR" property="address"/>
         <result column="del_flag" jdbcType="INTEGER" property="delFlag"/>
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="update_time" jdbcType="DATE" property="updateTime"/>
     </resultMap>
 
-    <select id="checkPhoneIsExit" resultType="com.tan.ums.entity.UserEntity">
-        select * from t_user where phone = #{phone}
-    </select>
-
-    <insert id="add" useGeneratedKeys="true">
-        insert into t_user (nick_name, pwd, phone, sex, address, del_flag, create_time, update_time) values
+    <insert id="add" parameterType="com.tan.ums.entity.UserDomain">
+        <!--注意这里的表名用的是配置分表时的抽象表名，而不是具体的表名-->
+        insert into table_user
+        (id, nick_name, pwd, phone, sex, address, del_flag, create_time, update_time)
+        values
         (
-          #{req.nickName}, #{req.pwd}, #{req.phone}, #{req.sex}, #{req.address}, #{req.delFlag}, now(), now()
+          #{req.id, jdbcType=BIGINT},
+          #{req.nickName, jdbcType=VARCHAR},
+          #{req.pwd, jdbcType=VARCHAR},
+          #{req.phone, jdbcType=VARCHAR},
+          #{req.sex, jdbcType=VARCHAR},
+          #{req.address, jdbcType=VARCHAR},
+          #{req.delFlag, jdbcType=VARCHAR},
+          #{req.createTime, jdbcType=DATE},
+          #{req.updateTime, jdbcType=DATE}
         )
     </insert>
 </mapper>

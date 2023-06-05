@@ -3,7 +3,7 @@ package com.tan.ums.web;
 import com.alibaba.cloud.commons.lang.StringUtils;
 import com.tan.common.resp.ErrorEnum;
 import com.tan.common.resp.R;
-import com.tan.ums.entity.UserEntity;
+import com.tan.ums.entity.UserDomain;
 import com.tan.ums.req.AddUserReq;
 import com.tan.ums.service.UserService;
 import org.springframework.beans.BeanUtils;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 
 @RestController
 @RequestMapping("/user")
@@ -21,7 +20,7 @@ public class UserController {
 
     @PostMapping("/add")
     public R add(@RequestBody @Valid AddUserReq req) {
-        UserEntity userEntity = new UserEntity();
+        UserDomain userEntity = new UserDomain();
         BeanUtils.copyProperties(req, userEntity);
         if (userService.add(userEntity)) {
             return R.success();

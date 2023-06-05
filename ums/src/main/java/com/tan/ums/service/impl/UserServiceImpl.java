@@ -6,15 +6,16 @@ import com.tan.common.cons.LogEnum;
 import com.tan.common.cons.RedisCons;
 import com.tan.common.utils.AESUtils;
 import com.tan.common.utils.RedisUtils;
+import com.tan.common.utils.SnowFlakeUtil;
+import com.tan.common.utils.TimeUtils;
 import com.tan.ums.dao.UserDao;
-import com.tan.ums.entity.UserEntity;
+import com.tan.ums.entity.UserDomain;
 import com.tan.ums.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -29,22 +30,26 @@ public class UserServiceImpl implements UserService {
     private RedisUtils redisUtils;
 
     @Override
-    public boolean add(UserEntity req) {
+    public boolean add(UserDomain req) {
         // 校验phone唯一性
-        if (checkPhone(req.getPhone())) {
+/*        if (checkPhone(req.getPhone())) {
             return false;
-        }
+        }*/
 
         // 密码加密存储
+        Long snowFlakeId = SnowFlakeUtil.getSnowFlakeId();
+        req.setId(snowFlakeId);
         String encrypt = AESUtils.encrypt(req.getPwd(), Cons.PWD_SALT);
         req.setPwd(encrypt);
 
         req.setDelFlag("1");
+        req.setCreateTime(new Date());
+        req.setUpdateTime(new Date());
         return userDao.add(req);
     }
 
     private boolean checkPhone(String phone) {
-        UserEntity userEntity = userDao.checkPhoneIsExit(phone);
+        UserDomain userEntity = userDao.checkPhoneIsExit(phone);
         if (Objects.nonNull(userEntity)) {
             return true;
         }
@@ -54,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String login(String phone, String pwd) {
-        UserEntity userEntity = userDao.checkPhoneIsExit(phone);
+        UserDomain userEntity = userDao.checkPhoneIsExit(phone);
         if (Objects.isNull(userEntity)) {
             log.error("{} system, the user is not exit", LogEnum.UMS_SYSTEEM);
             return StringUtils.EMPTY;

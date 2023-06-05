@@ -1,6 +1,6 @@
 package com.tan.ums.dao;
 
-import com.tan.ums.entity.UserEntity;
+import com.tan.ums.entity.UserDomain;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,12 +12,12 @@ public interface UserDao {
      * @param phone
      * @return
      */
-    UserEntity checkPhoneIsExit(@Param("phone") String phone);
+    UserDomain checkPhoneIsExit(@Param("phone") String phone);
 
     /**
      * 新增用户
      * @param req
      * @return
      */
-    boolean add(@Param("req") UserEntity req);
+    boolean add(@Param("req") UserDomain req);
 }

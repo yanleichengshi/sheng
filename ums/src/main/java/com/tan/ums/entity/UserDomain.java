@@ -4,9 +4,9 @@ import com.tan.common.base.BaseEntity;
 import lombok.Data;
 
 @Data
-public class UserEntity extends BaseEntity {
+public class UserDomain extends BaseEntity {
     /**主键id*/
-    private Integer id;
+    private Long id;
     /**昵称*/
     private String nickName;
     /**密码*/
