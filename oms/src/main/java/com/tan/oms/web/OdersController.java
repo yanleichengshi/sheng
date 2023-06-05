@@ -19,6 +19,6 @@ public class OdersController {
 
     @GetMapping("/add")
     public void add() {
-        orderMapper.save(new OrderDomain(5, 1));
+        orderMapper.save(new OrderDomain(101, 1));
     }
 }

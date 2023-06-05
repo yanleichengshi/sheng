@@ -34,8 +34,8 @@ spring:
         password: qwer123 #你的密码
     sharding:
       tables:
-        t_order: #自定义虚拟表名 但是在mapper.xml中 操作表的时候 要用这个虚拟表名
-          actual-data-nodes: ds$->{0..1}.order$->{0..1}
+        table_order: #自定义虚拟表名 但是在mapper.xml中 操作表的时候 要用这个虚拟表名
+          actual-data-nodes: ds$->{0..1}.t_order$->{0..1}
           databaseStrategy: #分库策略
             inline:
               shardingColumn: sharding_db_id #分库用的列名(真实列名）
@@ -43,6 +43,6 @@ spring:
           table-strategy: #分表策略
             inline:
               sharding-column: sharding_table_id #分表用的列名(真实列名）
-              algorithm-expression: order$->{sharding_table_id % 2} #分表算法，根据上面的列里面的数据计算分到哪个表
+              algorithm-expression: t_order$->{sharding_table_id % 2} #分表算法，根据上面的列里面的数据计算分到哪个表
 props:
   sql.show: true

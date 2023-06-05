@@ -7,7 +7,7 @@
     <insert id="save" parameterType="com.tan.oms.entity.OrderDomain"
             keyProperty="id" useGeneratedKeys="true">
         <!--注意这里的表名用的是配置分表时的抽象表名，而不是具体的表名-->
-        insert into t_order
+        insert into table_order
         (
             id,
             sharding_db_id,
