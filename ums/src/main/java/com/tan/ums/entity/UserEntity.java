@@ -4,7 +4,7 @@ import com.tan.common.base.BaseEntity;
 import lombok.Data;
 
 @Data
-public class UserDomain extends BaseEntity {
+public class UserEntity extends BaseEntity {
     /**主键id*/
     private Long id;
     /**昵称*/

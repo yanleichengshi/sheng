@@ -6,7 +6,7 @@ import com.tan.common.cons.LogEnum;
 import com.tan.common.cons.RedisCons;
 import com.tan.common.utils.*;
 import com.tan.ums.dao.UserDao;
-import com.tan.ums.entity.UserDomain;
+import com.tan.ums.entity.UserEntity;
 import com.tan.ums.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -27,7 +26,7 @@ public class UserServiceImpl implements UserService {
     private RedisUtils redisUtils;
 
     @Override
-    public boolean add(UserDomain req) {
+    public boolean add(UserEntity req) {
         // 校验phone唯一性
         if (checkPhone(req.getPhone())) {
             return false;
@@ -46,7 +45,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean checkPhone(String phone) {
-        UserDomain userEntity = userDao.checkPhoneIsExit(phone);
+        UserEntity userEntity = userDao.checkPhoneIsExit(phone);
         if (Objects.isNull(userEntity)) {
             return false;
         }
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String login(String phone, String pwd) {
-        UserDomain userEntity = userDao.checkPhoneIsExit(phone);
+        UserEntity userEntity = userDao.checkPhoneIsExit(phone);
         if (Objects.isNull(userEntity)) {
             log.error("{} system, the user is not exit", LogEnum.UMS_SYSTEEM);
             return StringUtils.EMPTY;

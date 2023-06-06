@@ -24,31 +24,21 @@ spring:
     allow-bean-definition-overriding: true
   shardingsphere:
     datasource:
-      names: ds0,ds1 # 兹定于虚拟库名
-      ds0:
+      names: db0 # 兹定于虚拟库名
+      db0:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/ds_0?characterEncoding=utf-8&serverTimezone=UTC
-        username: root #你的账号
-        password: qwer123 #你的密码
-      ds1:
-        type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/ds_1?characterEncoding=utf-8&serverTimezone=UTC
+        url: jdbc:mysql://localhost:3306/ums?characterEncoding=utf-8&serverTimezone=UTC
         username: root #你的账号
         password: qwer123 #你的密码
     sharding:
       tables:
         table_user: #自定义虚拟表名 但是在mapper.xml中 操作表的时候 要用这个虚拟表名
-          actual-data-nodes: ds$->{0..1}.t_user$->{0..4}
-          databaseStrategy: #分库策略
-            inline:
-              shardingColumn: id #分库用的列名(真实列名）
-              algorithmExpression: ds${id % 2} #分库算法，根据上面的列里面的数据计算分到哪个库
+          actual-data-nodes: db0.t_user$->{0..2}
           table-strategy: #分表策略
             inline:
               sharding-column: id #分表用的列名(真实列名）
-              algorithm-expression: t_user$->{id % 5} #分表算法，根据上面的列里面的数据计算分到哪个表
+              algorithm-expression: t_user$->{id % 3} #分表算法，根据上面的列里面的数据计算分到哪个表
     props:
       sql:
         show: true

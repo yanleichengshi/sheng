@@ -1,9 +1,9 @@
 package com.tan.ums.service;
 
-import com.tan.ums.entity.UserDomain;
+import com.tan.ums.entity.UserEntity;
 
 public interface UserService {
-    boolean add(UserDomain req);
+    boolean add(UserEntity req);
 
     String login(String phone, String pwd);
 }
