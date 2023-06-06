@@ -32,4 +32,8 @@
           #{req.updateTime, jdbcType=DATE}
         )
     </insert>
+
+    <select id="checkPhoneIsExit" resultMap="userInfos">
+      select * from table_user  where phone = #{phone}
+    </select>
 </mapper>

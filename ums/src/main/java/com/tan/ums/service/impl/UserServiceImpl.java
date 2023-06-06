@@ -32,9 +32,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean add(UserDomain req) {
         // 校验phone唯一性
-/*        if (checkPhone(req.getPhone())) {
+        if (checkPhone(req.getPhone())) {
             return false;
-        }*/
+        }
 
         // 密码加密存储
         Long snowFlakeId = SnowFlakeUtil.getSnowFlakeId();
@@ -50,11 +50,11 @@ public class UserServiceImpl implements UserService {
 
     private boolean checkPhone(String phone) {
         UserDomain userEntity = userDao.checkPhoneIsExit(phone);
-        if (Objects.nonNull(userEntity)) {
-            return true;
+        if (Objects.isNull(userEntity)) {
+            return false;
         }
         log.error("{} system, the phone {} has exit", LogEnum.UMS_SYSTEEM, phone);
-        return false;
+        return true;
     }
 
     @Override
