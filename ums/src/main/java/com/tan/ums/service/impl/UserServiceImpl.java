@@ -4,10 +4,7 @@ import com.alibaba.cloud.commons.lang.StringUtils;
 import com.tan.common.cons.Cons;
 import com.tan.common.cons.LogEnum;
 import com.tan.common.cons.RedisCons;
-import com.tan.common.utils.AESUtils;
-import com.tan.common.utils.RedisUtils;
-import com.tan.common.utils.SnowFlakeUtil;
-import com.tan.common.utils.TimeUtils;
+import com.tan.common.utils.*;
 import com.tan.ums.dao.UserDao;
 import com.tan.ums.entity.UserDomain;
 import com.tan.ums.service.UserService;
@@ -67,8 +64,8 @@ public class UserServiceImpl implements UserService {
         String encrypt = AESUtils.encrypt(pwd, Cons.PWD_SALT);
         if (StringUtils.equals(userEntity.getPwd(), encrypt)) {
             // 身份认证成功，生成token，写入redis，并且返回token
-            String token = UUID.randomUUID().toString();
-            redisUtils.setEx(RedisCons.UMS_USER + "TOKEN", token, 30, TimeUnit.MINUTES);
+            String token = UUIDUtils.getUuid();
+            redisUtils.setEx(RedisCons.UMS_USER + "TOKEN:" + phone, token, 30, TimeUnit.MINUTES);
             return token;
         }
         return StringUtils.EMPTY;
