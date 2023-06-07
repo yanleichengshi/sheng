@@ -38,9 +38,6 @@ public class UserServiceImpl implements UserService {
         String encrypt = AESUtils.encrypt(req.getPwd(), Cons.PWD_SALT);
         req.setPwd(encrypt);
 
-        req.setDelFlag("1");
-        req.setCreateTime(new Date());
-        req.setUpdateTime(new Date());
         return userDao.add(req);
     }
 

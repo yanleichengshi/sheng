@@ -18,7 +18,7 @@
     <insert id="add" parameterType="com.tan.ums.entity.UserEntity">
         <!--注意这里的表名用的是配置分表时的抽象表名，而不是具体的表名-->
         insert into table_user
-        (id, nick_name, pwd, phone, sex, address, del_flag, create_time, update_time)
+        (id, nick_name, pwd, phone, sex, address)
         values
         (
           #{req.id, jdbcType=BIGINT},
@@ -26,10 +26,7 @@
           #{req.pwd, jdbcType=VARCHAR},
           #{req.phone, jdbcType=VARCHAR},
           #{req.sex, jdbcType=VARCHAR},
-          #{req.address, jdbcType=VARCHAR},
-          #{req.delFlag, jdbcType=VARCHAR},
-          #{req.createTime, jdbcType=DATE},
-          #{req.updateTime, jdbcType=DATE}
+          #{req.address, jdbcType=VARCHAR}
         )
     </insert>
 

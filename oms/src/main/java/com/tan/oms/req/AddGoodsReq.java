@@ -12,26 +12,26 @@ public class AddGoodsReq {
      * 商品名称
      */
     @NotBlank
-    private String goods_name;
+    private String goodsName;
     /**
      * 商品数量
      */
     @Min(0)
-    private Integer goods_num;
+    private Integer goodsNum;
     /**
      * 商品生产时间
      */
     @NotBlank
-    private Date start_time;
+    private Date startTime;
     /**
      * 商品最后有效时间
      */
     @NotBlank
-    private Date end_time;
+    private Date endTime;
     /**
      * 商品类型
      */
-    private String goods_type;
+    private String goodsType;
     /**
      * 商品价格
      */
