@@ -22,11 +22,12 @@ public class GoodServiceImpl implements GoodService {
     @Override
     public boolean add(GoodsEntity goodsEntity) {
         GoodsEntity goods = goodsDao.checkExit(goodsEntity.getGoodsName(), goodsEntity.getGoodsType());
-        if (Objects.isNull(goods)) {
-            log.error("{} system, the {} has the {}", LogEnum.DB_SYSTEEM, goods.getGoodsType(), goodsEntity.getGoodsName());
+        if (Objects.nonNull(goods)) {
+            log.error("{} system, the {} has the {}", LogEnum.DB_SYSTEEM, goodsEntity.getGoodsType(), goodsEntity.getGoodsName());
             return false;
         }
         goodsEntity.setId(SnowFlakeUtil.getSnowFlakeId());
-        return goodsDao.save(goodsEntity);
+        boolean save = goodsDao.save(goodsEntity);
+        return save;
     }
 }

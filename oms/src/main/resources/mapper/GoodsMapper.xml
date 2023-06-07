@@ -11,10 +11,10 @@
         (
             #{addInfo.id},
             #{addInfo.goodsName},
-            #{addInfo.goodsNum}
-            #{addInfo.startTime}
-            #{addInfo.endTime}
-            #{addInfo.goodsType}
+            #{addInfo.goodsNum},
+            #{addInfo.startTime},
+            #{addInfo.endTime},
+            #{addInfo.goodsType},
             #{addInfo.price}
         )
     </insert>

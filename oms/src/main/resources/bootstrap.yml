@@ -35,15 +35,15 @@ spring:
     sharding:
       tables:
         table_goods: #自定义虚拟表名 但是在mapper.xml中 操作表的时候 要用这个虚拟表名
-          actual-data-nodes: ds$->{0..1}.t_goods$->{0..4}
+          actual-data-nodes: oms$->{0..1}.t_goods$->{0..4}
           databaseStrategy: #分库策略
             inline:
               shardingColumn: id #分库用的列名(真实列名）
-              algorithmExpression: ds${id % 2} #分库算法，根据上面的列里面的数据计算分到哪个库
+              algorithmExpression: oms${id % 2} #分库算法，根据上面的列里面的数据计算分到哪个库
           table-strategy: #分表策略
             inline:
               sharding-column: id #分表用的列名(真实列名）
-              algorithm-expression: t_goods$->{id % 4} #分表算法，根据上面的列里面的数据计算分到哪个表
+              algorithm-expression: t_goods$->{id % 5} #分表算法，根据上面的列里面的数据计算分到哪个表
     props:
       sql:
         show: true

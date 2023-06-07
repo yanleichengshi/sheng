@@ -1,5 +1,6 @@
 package com.tan.oms.req;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.constraints.Min;
@@ -22,11 +23,13 @@ public class AddGoodsReq {
      * 商品生产时间
      */
     @NotBlank
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
     /**
      * 商品最后有效时间
      */
     @NotBlank
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
     /**
      * 商品类型
