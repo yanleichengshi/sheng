@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tan.oms.dao.GoodsDao">
+    <insert id="save" parameterType="com.tan.oms.entity.GoodsEntity">
+        <!--注意这里的表名用的是配置分表时的抽象表名，而不是具体的表名-->
+        insert into table_goods
+        (id, goods_name, goods_num, start_time, end_time, goods_type, price)
+        values
+        (
+            #{addInfo.id},
+            #{addInfo.goodsName},
+            #{addInfo.goodsNum}
+            #{addInfo.startTime}
+            #{addInfo.endTime}
+            #{addInfo.goodsType}
+            #{addInfo.price}
+        )
+    </insert>
+    <select id="checkExit" resultType="com.tan.oms.entity.GoodsEntity">
+        select * from table_goods where goods_name = #{name} and goods_type = #{type}
+    </select>
+</mapper>
