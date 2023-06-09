@@ -1,8 +1,11 @@
 package com.tan.ums.dao;
 
 import com.tan.ums.entity.UserEntity;
+import com.tan.ums.req.UserQueryReq;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface UserDao {
@@ -20,4 +23,8 @@ public interface UserDao {
      * @return
      */
     boolean add(@Param("req") UserEntity req);
+
+    List<UserEntity> query(@Param("req") UserQueryReq req);
+
+    UserEntity queryById(@Param("id") Long id);
 }

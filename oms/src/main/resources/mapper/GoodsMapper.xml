@@ -3,6 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tan.oms.dao.GoodsDao">
+    <resultMap id="goodsInfo" type="com.tan.oms.entity.GoodsEntity">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="goods_name" jdbcType="VARCHAR" property="goodsName"/>
+        <result column="goods_num" jdbcType="INTEGER" property="goodsNum"/>
+        <result column="start_time" jdbcType="DATE" property="startTime"/>
+        <result column="end_time" jdbcType="DATE" property="endTime"/>
+        <result column="goods_type" jdbcType="VARCHAR" property="goodsType"/>
+        <result column="price" jdbcType="INTEGER" property="price"/>
+        <result column="del_flag" jdbcType="INTEGER" property="delFlag"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="update_time" jdbcType="DATE" property="updateTime"/>
+    </resultMap>
+
     <insert id="save" parameterType="com.tan.oms.entity.GoodsEntity">
         <!--注意这里的表名用的是配置分表时的抽象表名，而不是具体的表名-->
         insert into table_goods
@@ -18,7 +31,12 @@
             #{addInfo.price}
         )
     </insert>
+
     <select id="checkExit" resultType="com.tan.oms.entity.GoodsEntity">
         select * from table_goods where goods_name = #{name} and goods_type = #{type}
+    </select>
+
+    <select id="queryById" resultMap="goodsInfo">
+        select * from table_goods where id = #{id}
     </select>
 </mapper>

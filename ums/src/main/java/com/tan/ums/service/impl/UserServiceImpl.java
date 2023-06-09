@@ -4,15 +4,23 @@ import com.alibaba.cloud.commons.lang.StringUtils;
 import com.tan.common.cons.Cons;
 import com.tan.common.cons.LogEnum;
 import com.tan.common.cons.RedisCons;
+import com.tan.common.exception.MyException;
+import com.tan.common.resp.ErrorEnum;
+import com.tan.common.resp.R;
+import com.tan.common.resp.ResultCode;
 import com.tan.common.utils.*;
+import com.tan.ums.apifeign.pojo.GoodsPojo;
+import com.tan.ums.apifeign.service.GoodsApiService;
 import com.tan.ums.dao.UserDao;
 import com.tan.ums.entity.UserEntity;
+import com.tan.ums.req.UserQueryReq;
 import com.tan.ums.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -21,6 +29,9 @@ import java.util.concurrent.TimeUnit;
 public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
+
+    @Resource
+    private GoodsApiService goodsApiService;
 
     @Resource
     private RedisUtils redisUtils;
@@ -65,5 +76,29 @@ public class UserServiceImpl implements UserService {
             return token;
         }
         return StringUtils.EMPTY;
+    }
+
+    @Override
+    public List<UserEntity> query(UserQueryReq req) {
+        return userDao.query(req);
+    }
+
+    @Override
+    public UserEntity queryById(Long id) {
+        UserEntity userEntity = userDao.queryById(id);
+        if (Objects.isNull(userEntity)) {
+            throw new MyException(ErrorEnum.UMS_USER_NOT_EXIT);
+        }
+        return userEntity;
+    }
+
+    /*goods*/
+    @Override
+    public GoodsPojo queryGoods(Long id) {
+        R<GoodsPojo> result = goodsApiService.getInfos(id);
+        if (!Objects.equals(result.getCode(), ResultCode.SUCCESS.getCode())) {
+            throw new MyException(result.getMsg());
+        }
+        return result.getData();
     }
 }

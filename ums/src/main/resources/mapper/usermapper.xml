@@ -33,4 +33,20 @@
     <select id="checkPhoneIsExit" resultMap="userInfos">
       select * from table_user  where phone = #{phone}
     </select>
+
+    <select id="query" resultMap="userInfos">
+      select * from  table_user where 1 = 1
+        <if test="req.nickName != null and req.nickName != ''">
+            AND nick_name LIKE CONCAT('%',#{req.nickName},'%')
+        </if>
+        <if test="req.phone != null and req.phone != ''">
+            AND phone LIKE CONCAT('%',#{req.phone},'%')
+        </if>
+        order by id desc
+        limit #{req.pageNum}, #{req.pageSize}
+    </select>
+
+    <select id="queryById" resultMap="userInfos">
+        select * from table_user where id = #{id}
+    </select>
 </mapper>

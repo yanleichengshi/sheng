@@ -2,6 +2,7 @@ package com.tan.oms.web;
 
 import com.tan.common.resp.ErrorEnum;
 import com.tan.common.resp.R;
+import com.tan.oms.apifeign.pojo.UserPojo;
 import com.tan.oms.entity.GoodsEntity;
 import com.tan.oms.req.AddGoodsReq;
 import com.tan.oms.service.GoodService;
@@ -24,5 +25,16 @@ public class GoodsController {
             return R.success();
         }
         return R.fail(ErrorEnum.ADD_FAIL.getMsg());
+    }
+
+    @GetMapping("/queryById")
+    public R<GoodsEntity> queryById(@RequestParam Long id) {
+        return R.success(goodService.queryById(id));
+    }
+
+    /*user*/
+    @GetMapping("/queryUser")
+    public R<UserPojo> queryUser(@RequestParam Long id) {
+        return R.success(goodService.queryUser(id));
     }
 }
