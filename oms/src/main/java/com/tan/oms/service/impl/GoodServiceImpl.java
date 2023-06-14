@@ -52,7 +52,7 @@ public class GoodServiceImpl implements GoodService {
     @Override
     public UserPojo queryUser(Long id) {
         R<UserPojo> result = userApiService.getInfos(id);
-        if (Objects.equals(result.getCode(), ResultCode.SUCCESS.getCode())) {
+        if (!Objects.equals(result.getCode(), ResultCode.SUCCESS.getCode())) {
             throw new MyException(ErrorEnum.UMS_USER_NOT_EXIT);
         }
         return result.getData();
