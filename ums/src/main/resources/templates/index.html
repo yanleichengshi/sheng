@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>首页</title>
+    <link rel="stylesheet" href="./layui/css/layui.css"> <!-- 不要加static -->
+    <script type="text/javascript" src="./layui/layui.js"></script>
+    <script type="text/javascript" src="./layui/layui.all.js"></script>
+    <style>
+        body{
+            background:url(./image/222.png) no-repeat center top;
+            background-size:cover;
+            background-attachment:fixed;
+        }
+        .layui-form{
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+<style>
+    .demo-reg-container{width: 320px; margin: 21px auto 0;}
+    .demo-reg-other .layui-icon{position: relative; display: inline-block; margin: 0 2px; top: 2px; font-size: 26px;}
+</style>
+<form class="layui-form">
+    <div class="demo-reg-container">
+        <div class="layui-form-item">
+            <div class="layui-row">
+                <div class="layui-col-xs7">
+                    <div class="layui-input-wrap">
+                        <div class="layui-input-prefix">
+                            <i class="layui-icon layui-icon-cellphone"></i>
+                        </div>
+                        <input type="text" name="cellphone" value="" lay-verify="phone" placeholder="手机号" lay-reqtext="请填写手机号" autocomplete="off" class="layui-input" id="reg-cellphone">
+                    </div>
+                </div>
+                <div class="layui-col-xs5">
+                    <div style="margin-left: 11px;">
+                        <button type="button" class="layui-btn layui-btn-fluid layui-btn-primary" lay-on="reg-get-vercode">获取验证码</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-wrap">
+                <div class="layui-input-prefix">
+                    <i class="layui-icon layui-icon-vercode"></i>
+                </div>
+                <input type="text" name="vercode" value="" lay-verify="required" placeholder="验证码" lay-reqtext="请填写验证码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-wrap">
+                <div class="layui-input-prefix">
+                    <i class="layui-icon layui-icon-password"></i>
+                </div>
+                <input type="password" name="password" value="" lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input" id="reg-password" lay-affix="eye">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-wrap">
+                <div class="layui-input-prefix">
+                    <i class="layui-icon layui-icon-password"></i>
+                </div>
+                <input type="password" name="confirmPassword" value="" lay-verify="required|confirmPassword" placeholder="确认密码" autocomplete="off" class="layui-input" lay-affix="eye">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-wrap">
+                <div class="layui-input-prefix">
+                    <i class="layui-icon layui-icon-username"></i>
+                </div>
+                <input type="text" name="nickname" value="" lay-verify="required" placeholder="昵称" autocomplete="off" class="layui-input" lay-affix="clear">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <input type="checkbox" name="agreement" lay-verify="required" lay-skin="primary" title="同意">
+            <a href="form.html#terms" target="_blank" style="position: relative; top: 6px; left: -15px;">
+                <ins>用户协议</ins>
+            </a>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="demo-reg">注册</button>
+        </div>
+        <div class="layui-form-item demo-reg-other">
+            <label>社交账号注册</label>
+            <span style="padding: 0 21px 0 6px;">
+            <a href="javascript:;"><i class="layui-icon layui-icon-login-qq" style="color: #3492ed;"></i></a>
+            <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat" style="color: #4daf29;"></i></a>
+            <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo" style="color: #cf1900;"></i></a>
+          </span>
+            <a href="form.html#login">登录已有帐号</a></span>
+        </div>
+    </div>
+</form>
+
+<script>
+    layui.use(function(){
+        var $ = layui.$;
+        var form = layui.form;
+        var layer = layui.layer;
+        var util = layui.util;
+
+        // 校验两次输入的密码是否一致
+        form.verify({
+            // 确认密码
+            confirmPassword: function(value, item){
+                var passwordValue = $("#reg-password").val();
+                if(value !== passwordValue){
+                    return '两次密码输入不一致';
+                }
+            }
+        });
+
+        // 提交事件
+        form.on('submit(demo-reg)', function(data){
+            var field = data.field; // 获取表单字段值
+            // 是否勾选同意
+            if(!field.agreement){
+                layer.msg('您必须勾选同意用户协议才能注册');
+                return false;
+            }
+            $.ajax({
+                url: "http://localhost:9002/ums/user/login",
+                data: {
+                    "phone": field.cellphone,
+                    // "nickName": field.nickname,
+                    "pwd": field.password
+                },
+                type: "POST",
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded;charset=UTF-8"
+            }).done(function( res ) {
+                console.log(res)
+                $('input[name="vercode"]').val(res);
+            }).fail(function (e) {
+                alert("失败")
+            });
+
+            return false; // 阻止默认 form 跳转
+        });
+
+        // 通过 ajax 获取后端验证码 并且回显
+        util.on('lay-on', {
+            'reg-get-vercode': function(othis){
+                var phone = $('#reg-cellphone').val();
+                var reg=/^[1][3,4,5,7,8][0-9]{9}$/;
+                if (!reg.test(phone)) {
+                    layer.msg('请输入正确的手机号码!');
+                    return false;
+                }
+                $.ajax({
+                    url: "http://localhost:9002/ums/getVerifyCode",
+                    type: "GET",
+                    dataType: "json"
+                }).done(function( res ) {
+                    console.log(res)
+                    $('input[name="vercode"]').val(res);
+                }).fail(function (e) {
+                    alert("失败")
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>
